@@ -146,6 +146,9 @@ export default function App() {
                   }}
                   getOptionLabel={(o) => o.label}
                   isOptionEqualToValue={(a, b) => a.user.id === b.user.id}
+                  noOptionsText={
+                    search.trim() ? `No results for "${search}"` : "No results"
+                  }
                   renderInput={(params) => (
                     <TextField
                       {...params}
