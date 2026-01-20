@@ -1,35 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Box, Card, CardContent, Container, Typography } from "@mui/material";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Box
+      sx={{
+        minHeight: "100vh",
+        bgcolor: "background.default"
+      }}
+    >
+      <Container maxWidth="md" sx={{ py: 2, mx: "auto" }}>
+        <Typography variant="h4" component="h1" gutterBottom textAlign="center">
+          User Directory
+        </Typography>
+        <Typography
+          variant="body1"
+          color="text.secondary"
+          sx={{ mb: 3 }}
+          textAlign="center"
+        >
+          Search and select a user from the directory.
+        </Typography>
 
-export default App
+        <Card variant="outlined">
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              Search
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              (Autocomplete will go here next.)
+            </Typography>
+          </CardContent>
+        </Card>
+
+        <Card variant="outlined" sx={{ mt: 3 }}>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              Selected User
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Select a user to see details.
+            </Typography>
+          </CardContent>
+        </Card>
+      </Container>
+    </Box>
+  );
+}
