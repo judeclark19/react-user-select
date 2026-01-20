@@ -1,73 +1,85 @@
-# React + TypeScript + Vite
+# React User Directory
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React + TypeScript application that allows users to search for and select individuals from an auto-complete input and view their contact and address details.
 
-Currently, two official plugins are available:
+This project was built as part of a React Developer assessment.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Preview
 
-## React Compiler
+![React User Directory preview](src/assets/app-preview.png)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- Auto-complete search populated from the JSONPlaceholder Users API
+- Suggestions sorted alphabetically by **last name**
+- Name formatting that supports titles and suffixes when present
+- Displays selected user’s contact information and address
+- External links to user websites and Google Maps (using latitude/longitude)
+- Responsive layout using Material UI
+- Built with TypeScript
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- React
+- TypeScript
+- Vite
+- Material UI (Autocomplete, Icons)
+- Fetch API
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Name Formatting Rules
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Auto-complete suggestions follow this format:
+
+```
+{Last Name} {Suffix}, {First Name} (Title)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Only suffixes and titles that exist in the dataset are displayed.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Examples:
+- `Jane Doe` → `Doe, Jane`
+- `Mr. John Doe Jr.` → `Doe Jr., John (Mr.)`
+- `Mr. James Von Doe III` → `Von Doe III, James (Mr.)`
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18+ recommended)
+- npm
+
+### Installation
+
+```bash
+npm install
 ```
+
+### Run Locally
+
+```bash
+npm run dev
+```
+
+The app will be available at:
+
+```
+http://localhost:5173
+```
+
+
+## Data Source
+
+User data is fetched from:
+
+```
+https://jsonplaceholder.typicode.com/users
+```
+
+## Notes
+
+This project intentionally keeps the architecture simple and contained within a small number of files to match the scope of the assessment, while still demonstrating clean separation of concerns and thoughtful UI/UX decisions.
+
+## License
+
+This project is provided for evaluation purposes only.
