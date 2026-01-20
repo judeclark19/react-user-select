@@ -219,14 +219,6 @@ export default function App() {
                     />
                   )}
                 />
-
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ mt: 1 }}
-                >
-                  Showing {options.length} of {users.length} users.
-                </Typography>
               </>
             )}
           </CardContent>
