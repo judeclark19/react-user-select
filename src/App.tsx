@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   Container,
+  Divider,
   Link,
   Skeleton,
   TextField,
@@ -12,6 +13,12 @@ import {
 } from "@mui/material";
 import type { User } from "./types/user";
 import { formatDisplayName, includesIgnoreCase } from "./utils/nameFormat";
+import EmailOutlined from "@mui/icons-material/EmailOutlined";
+import PhoneOutlined from "@mui/icons-material/PhoneOutlined";
+import LanguageOutlined from "@mui/icons-material/LanguageOutlined";
+import LocationOnOutlined from "@mui/icons-material/LocationOnOutlined";
+import BusinessOutlined from "@mui/icons-material/BusinessOutlined";
+import OpenInNewOutlined from "@mui/icons-material/OpenInNewOutlined";
 
 const USERS_URL = "https://jsonplaceholder.typicode.com/users";
 
@@ -112,12 +119,12 @@ export default function App() {
         <Card variant="outlined" sx={{ boxShadow: 1 }}>
           <CardContent>
             <Typography variant="h6" component="h2" gutterBottom>
-              Search
+              Search Users
             </Typography>
             {loading ? (
               <Skeleton variant="rounded" height={56} sx={{ width: "100%" }} />
             ) : error ? (
-              <Typography variant="body2" color="error">
+              <Typography variant="body1" color="error">
                 Failed to load users: {error}
               </Typography>
             ) : (
@@ -154,67 +161,138 @@ export default function App() {
 
         <Card variant="outlined" sx={{ mt: 3, boxShadow: 1 }}>
           <CardContent>
-            <Typography variant="h6" component="h2" gutterBottom>
-              Selected User
+            {selectedUser && (
+              <Typography variant="body1" component="p" gutterBottom>
+                User Details
+              </Typography>
+            )}
+            <Typography
+              variant="h6"
+              component="h2"
+              gutterBottom
+              sx={{ fontWeight: 600 }}
+            >
+              {/* Selected User */}
+              {selectedUser
+                ? `${formatDisplayName(selectedUser.name).display}`
+                : "No User Selected"}
             </Typography>
             {!selectedUser ? (
-              <Typography variant="body2" color="text.secondary">
-                Select a user to see details.
+              <Typography variant="body1" color="text.secondary">
+                Select a user above to see details.
               </Typography>
             ) : (
               <Box sx={{ mt: 1 }}>
-                <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                  {formatDisplayName(selectedUser.name).display}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ mt: 0.5 }}
+                <Divider sx={{ my: 2 }} />
+
+                <Box
+                  sx={{
+                    display: "grid",
+                    gap: 2,
+                    gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }
+                  }}
                 >
-                  @{selectedUser.username}
-                </Typography>
-
-                <Box sx={{ mt: 2 }}>
-                  <Typography variant="body2">
-                    Email:{" "}
-                    <Link href={`mailto:${selectedUser.email}`}>
-                      {selectedUser.email}
-                    </Link>
-                  </Typography>
-                  <Typography variant="body2">
-                    Phone: {selectedUser.phone}
-                  </Typography>
-                  <Typography variant="body2">
-                    Website:{" "}
-                    <Link
-                      href={`https://${selectedUser.website}`}
-                      target="_blank"
-                      rel="noreferrer"
+                  <Box>
+                    <Typography
+                      variant="subtitle1"
+                      sx={{ fontWeight: 600, mb: 1 }}
                     >
-                      {selectedUser.website}
-                    </Link>
-                  </Typography>
-                </Box>
+                      Contact
+                    </Typography>
 
-                <Box sx={{ mt: 2 }}>
-                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                    Address
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {selectedUser.address.street} {selectedUser.address.suite}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {selectedUser.address.city}, {selectedUser.address.zipcode}
-                  </Typography>
-                </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        mb: 1
+                      }}
+                    >
+                      <EmailOutlined fontSize="small" aria-hidden />
+                      <Link href={`mailto:${selectedUser.email}`}>
+                        {selectedUser.email}
+                      </Link>
+                    </Box>
 
-                <Box sx={{ mt: 2 }}>
-                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                    Company
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {selectedUser.company.name}
-                  </Typography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        mb: 1
+                      }}
+                    >
+                      <PhoneOutlined fontSize="small" aria-hidden />
+                      <Typography variant="body1">
+                        {selectedUser.phone}
+                      </Typography>
+                    </Box>
+
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                      <LanguageOutlined fontSize="small" aria-hidden />
+                      <Link
+                        href={`https://${selectedUser.website}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`Visit ${selectedUser.website} (opens in a new tab)`}
+                      >
+                        {selectedUser.website}
+                      </Link>
+                    </Box>
+                  </Box>
+
+                  <Box>
+                    <Typography
+                      variant="subtitle1"
+                      sx={{ fontWeight: 600, mb: 1 }}
+                    >
+                      Address / Company
+                    </Typography>
+
+                    <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
+                      <LocationOnOutlined fontSize="small" aria-hidden />
+                      <Box>
+                        <Typography variant="body1" color="text.secondary">
+                          {selectedUser.address.street}
+                        </Typography>
+                        <Typography variant="body1" color="text.secondary">
+                          {selectedUser.address.suite}
+                        </Typography>
+                        <Typography variant="body1" color="text.secondary">
+                          {selectedUser.address.city},{" "}
+                          {selectedUser.address.zipcode}
+                        </Typography>
+
+                        <Link
+                          href={`https://www.google.com/maps?q=${selectedUser.address.geo.lat},${selectedUser.address.geo.lng}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label="View on Google Maps (opens in a new tab)"
+                          sx={{ display: "inline-block", mt: 0.5 }}
+                        >
+                          <Box
+                            sx={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: 0.5
+                            }}
+                          >
+                            View on Google Maps
+                            <OpenInNewOutlined fontSize="inherit" />
+                          </Box>
+                        </Link>
+                      </Box>
+                    </Box>
+
+                    <Box
+                      sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}
+                    >
+                      <BusinessOutlined fontSize="small" aria-hidden />
+                      <Typography variant="body1" color="text.secondary">
+                        {selectedUser.company.name}
+                      </Typography>
+                    </Box>
+                  </Box>
                 </Box>
               </Box>
             )}
