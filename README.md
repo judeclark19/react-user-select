@@ -6,7 +6,7 @@ This project was built as part of a React Developer assessment.
 
 ## Preview
 
-![React User Directory preview](src/assets/app-preview.png)
+![React User Directory preview](src/assets/app-preview.gif)
 
 ## Features
 
