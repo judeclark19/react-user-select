@@ -48,7 +48,6 @@ export default function App() {
         const data = (await res.json()) as User[];
         if (!cancelled) {
           setUsers(data);
-          console.log("Loaded users:", data);
         }
       } catch (e) {
         if (!cancelled) {
